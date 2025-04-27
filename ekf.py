@@ -45,7 +45,7 @@ class TwoDimensionalEKF:
         self.x = self.f(self.x)
 
         # predict the corresponding covariance
-        self.P = self.F(self.x) @ self.P @ F.T + self.Q
+        self.P = self.F(self.x) @ self.P @ self.F(self.x).T + self.Q
 
         return self.x, self.P
         
