@@ -5,4 +5,5 @@
 # - prediction step
 # - update step
 
-# 
+# plot the EKF estimates for position
+# plot the EKF estimates for velocity
