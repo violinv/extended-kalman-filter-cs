@@ -6,7 +6,6 @@ class TwoDimensionalEKF:
     Implement the Extended Kalman Filter (EKF) to locate a moving object, assuming
     that we are in a 2D space with constant velocity.
     """
-    
     def __init__(self, initial_state, initial_covariance, process_noise, measurement_noise, f, h, F, H, dt=1.0):
         """
         Initialise the initial state, covariance, process, and measurement noise
@@ -38,18 +37,31 @@ class TwoDimensionalEKF:
 
     def predict(self):
         """
-        Implements the predict step of the EKF algorithm, assuming additive noise.
+        Implement the predict step of the EKF algorithm, assuming additive noise.
         """
-        
         # apply the dynamic model function on previous state to predict the next state
         self.x = self.f(self.x)
 
         # predict the corresponding covariance
-        self.P = self.F(self.x) @ self.P @ self.F(self.x).T + self.Q
+        F = self.F(self.x)
+        self.P = F @ self.P @ F.T + self.Q
+
+        return self.x, self.P
+
+    def update(self, y):
+        """
+        Implement the predict step of the EKF algorithm.
+        """
+        # calculating equations as derived in mathematical report on the EKF (see README)
+        v = y - self.h(self.x)
+        H = self.H(self.x)
+        S = H @ self.P @ H.T + self.R
+        K = self.P @ H.T @ np.linalg.inv(S)
+        self.x = self.x + K @ v
+        self.P = self.P - (K @ H) @ self.P
 
         return self.x, self.P
         
-
 
 # create class for EKF algorithm:
 # - __init__ will have initial state
