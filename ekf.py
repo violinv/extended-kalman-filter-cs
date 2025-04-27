@@ -13,12 +13,26 @@ class TwoDimensionalEKF:
     
         Parameters
         -----------
-        - initial_state: [x, y, vx, vy] position (x, y) and velocity (vx, vy)
+        - initial_state: [x, y, vx, vy] with position (x, y) and velocity (vx, vy)
             Input numpy array with initial state estimate.
         - initial_covariance: 4x4 state uncertainty matrix
         - process_noise: 4x4 uncertainty matrix in object motion
         - measurement_noise: 2x2 uncertainty vector in measurement
         """
+
+        # initialise state vector
+        self.x = initial_state
+
+        # initialise state covariance matrix
+        self.P = initial_covariance
+         
+        # initialise process noise
+        self.Q = process_noise
+        
+        # initialise measurement noise
+        self.R = measurement_noise
+        
+
 
 # create class for EKF algorithm:
 # - __init__ will have initial state
